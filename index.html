@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古庸城 - 武陵初章</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+    />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2D2926', // 深棕黑色 - 高级感
+                        secondary: '#D4AF37', // 金色 - 奢华点缀
+                        accent: '#9E2A2B', // 暗红 - 强调色
+                        light: '#F8F5F0', // 米白 - 背景
+                        dark: '#1A1A1A', // 近黑 - 文字
+                    },
+                    fontFamily: {
+                        'serif': ['"Noto Serif SC"', 'serif'], // 中文衬线字体，类似奢侈品常用风格
+                        'sans': ['Inter', 'sans-serif'], // 无衬线字体，保证清晰度
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .text-shadow-lg {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+            .perspective {
+                perspective: 1000px;
+            }
+            .preserve-3d {
+                transform-style: preserve-3d;
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-light text-dark antialiased">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-500">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center bg-transparent">
+            <a href="#" class="text-2xl font-serif font-bold text-white text-shadow">
+                张家界古庸城
+                Zhangjiajie · Old Yong Town
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-white hover:text-secondary transition-colors">关于我们</a>
+                <a href="#highlights" class="text-white hover:text-secondary transition-colors">项目亮点</a>
+                <a href="#categories" class="text-white hover:text-secondary transition-colors">招商品类</a>
+                <a href="#process" class="text-white hover:text-secondary transition-colors">入驻流程</a>
+                <a href="#contact" class="bg-secondary text-dark px-6 py-2 rounded-sm hover:bg-opacity-90 transition-all">联系我们</a>
+            </div>
+            <button class="md:hidden text-white text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- 封面区域 -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="./FM.png" alt="张家界风景" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-dark bg-opacity-50"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="font-serif text-[clamp(2.5rem,8vw,5rem)] font-bold text-white leading-tight text-shadow-lg mb-4">
+                古庸城<br><span class="text-secondary italic">武陵初章</span>
+            </h1>
+            <p class="text-[clamp(1rem,3vw,1.5rem)] text-white text-shadow max-w-3xl mx-auto mb-8">
+                张家界文化村 · 文旅现实RPG街区开创者
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+                <div class="flex items-center text-white">
+                    <i class="fa fa-map-marker text-secondary mr-2 text-xl"></i>
+                    <span>张家界 · 沙堤</span>
+                </div>
+                <div class="h-6 w-px bg-gray-400 hidden sm:block"></div>
+                <div class="flex items-center text-white">
+                    <i class="fa fa-flag text-secondary mr-2 text-xl"></i>
+                    <span>招商计划正式发布</span>
+                </div>
+            </div>
+            <a href="#contact" class="inline-block bg-secondary text-dark px-8 py-3 rounded-sm text-lg font-medium hover:bg-opacity-90 transition-all transform hover:-translate-y-1">
+                加入我们的旅程
+            </a>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
+            <a href="#about" class="text-white text-3xl">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 perspective">
+                    <div class="bg-light p-1 shadow-xl rounded-sm preserve-3d hover-lift">
+                        <img src="./2.jpg" alt="古庸城概念图" class="w-full h-auto">
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary mb-6">我们是谁</h2>
+                    <p class="text-lg mb-6 leading-relaxed">
+                        古庸城，一座由张家界文化打造的沉浸式古风文旅现实RPG街区。
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-8">
+                        <div class="flex items-start">
+                            <i class="fa fa-money text-secondary text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold mb-1">总投资</h3>
+                                <p>17亿元</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-map text-secondary text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold mb-1">占地面积</h3>
+                                <p>120亩</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-building text-secondary text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold mb-1">建筑面积</h3>
+                                <p>13万㎡</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa fa-shopping-bag text-secondary text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h3 class="font-semibold mb-1">可容纳商户数</h3>
+                                <p>100+</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-secondary pl-4 py-2">
+                        <p class="italic text-lg">
+                            "现实游戏场 + 国风美学街 + 剧情式运营"
+                        </p>
+                        <p class="mt-2">
+                            在《武陵初章》版本，我们希望与一群志同道合的品牌商户，一起用文化、产品、创意，重塑湘西式市井生活的浪漫。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目亮点 -->
+    <section id="highlights" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">项目亮点</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">探索古庸城作为文旅创新目的地的独特之处</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 亮点1 -->
+                <div class="bg-white p-8 rounded-sm shadow-md hover-lift">
+                    <div class="w-14 h-14 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-gamepad text-secondary text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">现实游戏逻辑</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                            <span>玩家身份系统</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                            <span>NPC角色运营</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                            <span>每月任务更新机制</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 亮点2 -->
+                <div class="bg-white p-8 rounded-sm shadow-md hover-lift">
+                    <div class="w-14 h-14 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-cubes text-secondary text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">多维内容生态</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                            <span>演艺+美食</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                            <span>旅拍+快闪</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                            <span>古风体验</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 亮点3 -->
+                <div class="bg-white p-8 rounded-sm shadow-md hover-lift">
+                    <div class="w-14 h-14 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-map-signs text-secondary text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">沉浸式空间策划</h3>
+                    <p class="text-gray-600">
+                        "庸王街""庸王广场"等高参与场景，为游客带来深度沉浸体验。
+                    </p>
+                </div>
+                
+                <!-- 亮点4 -->
+                <div class="bg-white p-8 rounded-sm shadow-md hover-lift">
+                    <div class="w-14 h-14 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-share-alt text-secondary text-2xl"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">社交媒体传播性</h3>
+                    <p class="text-gray-600">
+                        每个摊位、店主都是一个独立内容IP，创造无限社交分享可能。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 招商品类 -->
+    <section id="categories" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">招商品类</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">探索古庸城多元的商业合作机会</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 餐饮类 -->
+                <div class="group relative overflow-hidden rounded-sm shadow-md hover-lift h-80">
+                    <img src="./photo-1592861956120-e524fc739696.jpg" alt="餐饮类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-cutlery text-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-3">餐饮类</h3>
+                        <ul class="space-y-1">
+                            <li>地方美食（甜酒、葛根粉、莓茶等）</li>
+                            <li>国风轻餐</li>
+                            <li>国际品牌</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 零售类 -->
+                <div class="group relative overflow-hidden rounded-sm shadow-md hover-lift h-80">
+                    <img src="./jimeng-2025-08-09-3874.png" alt="零售类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-shopping-basket text-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-3">零售类</h3>
+                        <ul class="space-y-1">
+                            <li>古风饰品</li>
+                            <li>文创器物</li>
+                            <li>非遗手工艺</li>
+                            <li>特产食品</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 旅拍类 -->
+                <div class="group relative overflow-hidden rounded-sm shadow-md hover-lift h-80">
+                    <img src="./jimeng-2025-08-09-4351.png" alt="旅拍类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-camera text-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-3">旅拍类</h3>
+                        <ul class="space-y-1">
+                            <li>汉服摄影服务</li>
+                            <li>妆造租赁</li>
+                            <li>一体化服务商</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 表演类 -->
+                <div class="group relative overflow-hidden rounded-sm shadow-md hover-lift h-80">
+                    <img src="./jimeng-2025-08-09-4813.png" alt="表演类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-music text-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-3">表演类</h3>
+                        <ul class="space-y-1">
+                            <li>小剧团</li>
+                            <li>驻场艺人</li>
+                            <li>街头快闪演出团队</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 快闪/季节限定 -->
+                <div class="group relative overflow-hidden rounded-sm shadow-md hover-lift h-80 md:col-span-2 lg:col-span-1">
+                    <img src="./jimeng-2025-08-09-9359.png" alt="快闪/季节限定" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mb-4">
+                            <i class="fa fa-calendar text-dark text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold mb-3">快闪/季节限定</h3>
+                        <p>
+                            可租摊位，低门槛，适合新品牌验证市场和季节性推广活动。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 入驻流程 -->
+    <section id="process" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">入驻流程</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">成为我们文化生态系统一部分的便捷路径</p>
+            
+            <div class="relative">
+                <!-- 连接线 -->
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-secondary transform -translate-x-1/2"></div>
+                
+                <!-- 步骤1 -->
+                <div class="flex flex-col md:flex-row items-center mb-16 relative">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-8 md:mt-0">
+                        <h3 class="font-serif text-xl font-bold mb-2">提交申请表</h3>
+                        <p class="text-gray-600">填写详细的申请表，包含您的品牌、产品和经营理念等信息。</p>
+                    </div>
+                    <div class="md:w-12 z-10 order-1 md:order-2">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl">1</div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                </div>
+                
+                <!-- 步骤2 -->
+                <div class="flex flex-col md:flex-row items-center mb-16 relative">
+                    <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+                    <div class="md:w-12 z-10 order-1">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl">2</div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-2 mt-8 md:mt-0">
+                        <h3 class="font-serif text-xl font-bold mb-2">项目团队初审</h3>
+                        <p class="text-gray-600">我们的项目团队将审核您的申请，评估与我们愿景和品牌生态的契合度。</p>
+                    </div>
+                </div>
+                
+                <!-- 步骤3 -->
+                <div class="flex flex-col md:flex-row items-center mb-16 relative">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-8 md:mt-0">
+                        <h3 class="font-serif text-xl font-bold mb-2">选址&装修支持</h3>
+                        <p class="text-gray-600">与我们的团队合作选择理想位置，并获得符合整体美学的装修支持。</p>
+                    </div>
+                    <div class="md:w-12 z-10 order-1 md:order-2">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl">3</div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                </div>
+                
+                <!-- 步骤4 -->
+                <div class="flex flex-col md:flex-row items-center mb-16 relative">
+                    <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+                    <div class="md:w-12 z-10 order-1">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl">4</div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-2 mt-8 md:mt-0">
+                        <h3 class="font-serif text-xl font-bold mb-2">试运营测试</h3>
+                        <p class="text-gray-600">在测试阶段启动您的业务，完善运营并融入我们的RPG生态系统。</p>
+                    </div>
+                </div>
+                
+                <!-- 步骤5 -->
+                <div class="flex flex-col md:flex-row items-center relative">
+                    <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-8 md:mt-0">
+                        <h3 class="font-serif text-xl font-bold mb-2">正式签约&上线版本任务</h3>
+                        <p class="text-gray-600">签署正式协议，作为古庸城不可或缺的一部分加入我们的月度"版本任务"。</p>
+                    </div>
+                    <div class="md:w-12 z-10 order-1 md:order-2">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl">5</div>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 order-3 hidden md:block"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 入驻权益 -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">入驻权益</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">加入我们文化社区的专属优势</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                <div class="flex">
+                    <div class="mr-6 text-secondary text-3xl mt-1">
+                        <i class="fa fa-paint-brush"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold mb-2">官方美陈支持</h3>
+                        <p class="text-gray-600">统一风格指导与定制建议，确保您的空间与整体美学无缝融合，同时保持品牌特色。</p>
+                    </div>
+                </div>
+                
+                <div class="flex">
+                    <div class="mr-6 text-secondary text-3xl mt-1">
+                        <i class="fa fa-eye"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold mb-2">NPC系统嵌入</h3>
+                        <p class="text-gray-600">有机会嵌入古庸城NPC系统，获得所有游客和玩家的持续关注与曝光。</p>
+                    </div>
+                </div>
+                
+                <div class="flex">
+                    <div class="mr-6 text-secondary text-3xl mt-1">
+                        <i class="fa fa-flag-checkered"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold mb-2">每月"版本任务"</h3>
+                        <p class="text-gray-600">参与月度主题活动和任务，旨在为您的业务带来持续的客流量和参与度。</p>
+                    </div>
+                </div>
+                
+                <div class="flex">
+                    <div class="mr-6 text-secondary text-3xl mt-1">
+                        <i class="fa fa-moon-o"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold mb-2">大型活动参与</h3>
+                        <p class="text-gray-600">参与夜游巡游、灯会等大型活动，吸引大量人群关注。</p>
+                    </div>
+                </div>
+                
+                <div class="flex md:col-span-2">
+                    <div class="mr-6 text-secondary text-3xl mt-1">
+                        <i class="fa fa-handshake-o"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold mb-2">IP共建特权</h3>
+                        <p class="text-gray-600">拥有现有流量和品牌认知度的商户，将获得与古庸城共同创建IP内容的特殊权限，扩大您的影响力和覆盖面。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 收益与政策 -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">收益与政策</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">我们支持您业务蓬勃发展的合作方式</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 试营业期间 -->
+                <div class="bg-white p-8 rounded-sm shadow-md hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                            <i class="fa fa-flask text-secondary text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold">试营业期间</h3>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-secondary mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <h4 class="font-semibold">免租/极低租金</h4>
+                                <p class="text-gray-600">在测试阶段最小化您的初始投资。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-secondary mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <h4 class="font-semibold">官方流量扶持、视频共创计划</h4>
+                                <p class="text-gray-600">受益于我们的营销努力和内容协作创作。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-secondary mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <h4 class="font-semibold">统一宣传素材包+全员可分佣门票体系</h4>
+                                <p class="text-gray-600">获取专业营销资产，参与我们的收益分成票务系统。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 正式营业后 -->
+                <div class="bg-white p-8 rounded-sm shadow-md hover-lift">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                            <i class="fa fa-rocket text-secondary text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold">正式营业后</h3>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-secondary mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <h4 class="font-semibold">门票提成机制</h4>
+                                <p class="text-gray-600">通过我们透明的收益分成模式，分享古庸城的整体成功。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-secondary mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <h4 class="font-semibold">联合品牌授权</h4>
+                                <p class="text-gray-600">通过官方联名合作机会扩大您的影响力。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-secondary mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <h4 class="font-semibold">实体+电商同步上线销售</h4>
+                                <p class="text-gray-600">通过整合的在线销售渠道，将业务扩展到实体空间之外。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- 版本节奏 -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">版本节奏</h2>
+        <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">我们打造世界级目的地的阶段性规划</p>
+        
+        <div class="relative max-w-5xl mx-auto">
+            <!-- 时间线（垂直居中贯穿） -->
+            <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-secondary transform -translate-x-1/2"></div>
+            
+            <!-- 版本1.0 -->
+            <div class="flex flex-col md:flex-row items-center mb-24 relative">
+                <div class="md:w-5/12 md:pr-12 md:text-right order-2 md:order-1">
+                    <h3 class="font-serif text-xl font-bold mb-2">1.0【武陵初开・序章】</h3>
+                    <p class="text-gray-600 mb-1">2025年</p>
+                    <p class="text-gray-600">街区运营测试 + 旅拍 + 灯光夜游 + 剧情演艺 + 旅行配套</p>
+                </div>
+                <!-- 时间点（居中对齐时间线） -->
+                <div class="md:w-2/12 z-10 order-1 md:order-2 my-6 md:my-0">
+                    <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl mx-auto">1.0</div>
+                </div>
+                <div class="md:w-5/12 md:pl-12 order-3 hidden md:block"></div>
+            </div>
+            
+            <!-- 版本2.0 -->
+            <div class="flex flex-col md:flex-row items-center mb-24 relative">
+                <div class="md:w-5/12 md:pr-12 hidden md:block"></div>
+                <div class="md:w-2/12 z-10 order-1 my-6 md:my-0">
+                    <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl mx-auto">2.0</div>
+                </div>
+                <div class="md:w-5/12 md:pl-12 order-2">
+                    <h3 class="font-serif text-xl font-bold mb-2">2.0【庸国百景】</h3>
+                    <p class="text-gray-600 mb-1">2026年</p>
+                    <p class="text-gray-600">沉浸剧场 + 高端民宿 + 苗医康养 + 夜间副本丰富</p>
+                </div>
+            </div>
+            
+            <!-- 版本3.0 -->
+            <div class="flex flex-col md:flex-row items-center relative">
+                <div class="md:w-5/12 md:pr-12 md:text-right order-2 md:order-1">
+                    <h3 class="font-serif text-xl font-bold mb-2">3.0【九澧山灵】</h3>
+                    <p class="text-gray-600 mb-1">2027年</p>
+                    <p class="text-gray-600">实景剧本村 + 城市巡演 + 影视/游戏IP联动</p>
+                </div>
+                <div class="md:w-2/12 z-10 order-1 md:order-2 my-6 md:my-0">
+                    <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-dark font-bold text-xl mx-auto">3.0</div>
+                </div>
+                <div class="md:w-5/12 md:pl-12 order-3 hidden md:block"></div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- 适合入驻的对象 -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">适合入驻的对象</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">探索您的业务或创意项目是否适合古庸城</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-sm shadow-md hover-lift">
+                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-home text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2">本地品牌主理人</h3>
+                    <p class="text-gray-600">将家乡味道和手工艺品带上国风主舞台。</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-sm shadow-md hover-lift">
+                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-lightbulb-o text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2">文化创业者</h3>
+                    <p class="text-gray-600">通过旅拍、文创产品和手工艺品找到新市场。</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-sm shadow-md hover-lift">
+                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-users text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2">项目团队</h3>
+                    <p class="text-gray-600">成为文化村的一部分，每日演绎，让城市焕发生机。</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-sm shadow-md hover-lift">
+                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-star text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2">新锐品牌方</h3>
+                    <p class="text-gray-600">测试新产品，与来自世界各地的游客对话。</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-sm shadow-md hover-lift">
+                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-video-camera text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2">自媒体创作者</h3>
+                    <p class="text-gray-600">探索内容共创和流量分发的新模式。</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-sm shadow-md hover-lift">
+                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-handshake-o text-secondary text-xl"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2">项目合作人</h3>
+                    <p class="text-gray-600">提交提案，参与单次活动或主办专属企划。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- 申请表单 -->
+<!-- 申请表单 -->
+<section id="application" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary text-center mb-4">商户申请表</h2>
+        <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16">迈出加入我们文化创新与延续的第一步</p>
+        
+        <div class="max-w-3xl mx-auto bg-gray-50 p-8 rounded-sm shadow-md text-center">
+            <div class="mb-8">
+                <p class="text-lg mb-6">请通过以下方式填写商户入驻申请问卷</p>
+                
+                <!-- 腾讯问卷二维码 -->
+                <div class="mb-8">
+                    <p class="mb-3 font-medium">扫描二维码填写</p>
+                    <div class="bg-white p-4 inline-block rounded-sm shadow-sm">
+                        <!-- 这里替换为你的问卷二维码图片 -->
+                        <img src="./qrcode.png" alt="古庸城商户申请表二维码" class="w-48 h-48 object-cover">
+                    </div>
+                </div>
+                
+                <!-- 腾讯问卷链接 -->
+                <a href="https://wj.qq.com/s2/23442000/586f/" target="_blank" class="inline-block bg-secondary text-dark px-8 py-3 rounded-sm hover:bg-opacity-90 transition-all text-center font-medium text-lg">
+                    点击跳转至申请表单填写
+                </a>
+                <p class="text-sm text-gray-500 mt-4">
+                    问卷将在新窗口打开，预计填写时间3-5分钟
+                </p>
+            </div> <!-- 补充：闭合class="mb-8"的div -->
+        </div> <!-- 补充：闭合整个表单容器的div -->
+    </div>
+</section>
+   <!-- 联系我们 -->
+<section id="contact" class="py-20 bg-primary text-white">
+    <div class="container mx-auto px-4">
+        <h2 class="font-serif text-[clamp(1.8rem,5vw,3rem)] font-bold text-center mb-4">联系我们</h2>
+        <p class="text-center text-white text-opacity-80 max-w-3xl mx-auto mb-16">获取更多关于这个令人兴奋的合作机会的信息</p>
+        
+        <!-- 联系信息居中展示 -->
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white bg-opacity-10 p-10 rounded-sm mb-12">
+                <h3 class="font-serif text-2xl font-bold mb-8 text-center">古庸城·招商团队</h3>
+                
+                <div class="space-y-8">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-12 h-12 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+                            <i class="fa fa-phone text-secondary text-xl"></i>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <h4 class="font-semibold mb-1 text-lg">联系电话/微信</h4>
+                            <p class="text-white text-opacity-90 text-lg">18074450953 / XPERTAS</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-12 h-12 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+                            <i class="fa fa-envelope text-secondary text-xl"></i>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <h4 class="font-semibold mb-1 text-lg">招商邮箱</h4>
+                            <p class="text-white text-opacity-90 text-lg">zjjgyc@aliyun.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="w-12 h-12 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+                            <i class="fa fa-map-marker text-secondary text-xl"></i>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <h4 class="font-semibold mb-1 text-lg">地址</h4>
+                            <p class="text-white text-opacity-90 text-lg">张家界 · 沙堤</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 社群二维码 -->
+            <div class="text-center">
+                <h4 class="font-semibold mb-4 text-xl">扫码加入「庸城招贤馆」商户社群</h4>
+                <div class="bg-white p-4 inline-block rounded-sm mx-auto">
+                    <img src="./93.jpg" alt="社群二维码" class="w-48 h-48 object-cover">
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-16 text-center">
+            <p class="font-serif text-2xl italic">"加入我们，一起让张家界热闹千年。"</p>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<!-- 页脚 -->
+<footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+            <a href="#" class="text-3xl font-serif font-bold mb-4 md:mb-0">古庸城</a>
+            <div class="flex space-x-6">
+                <!-- 微博 -->
+                <a href="#" class="text-white hover:text-secondary transition-colors" title="替换微博链接">
+                    <i class="fa-brands fa-weibo text-xl"></i>
+                </a>
+                <!-- 微信 -->
+                <a href="#" class="text-white hover:text-secondary transition-colors" title="替换微信链接">
+                    <i class="fa-brands fa-weixin text-xl"></i>
+                </a>
+                <!-- Instagram -->
+                <a href="#" class="text-white hover:text-secondary transition-colors" title="替换Ins链接">
+                    <i class="fa-brands fa-instagram text-xl"></i>
+                </a>
+                <!-- YouTube -->
+                <a href="#" class="text-white hover:text-secondary transition-colors" title="替换YouTube链接">
+                    <i class="fa-brands fa-youtube text-xl"></i>
+                </a>
+                <!-- B站 -->
+                <a href="https://space.bilibili.com/7201012?spm_id_from=333.1007.0.0" class="text-white hover:text-secondary transition-colors" title="Bilibili">
+                    <i class="fa-brands fa-bilibili text-xl"></i>
+                </a>
+                <!-- 抖音 -->
+                <a href="https://v.douyin.com/WnchK8IivHQ/ 1@9.com" class="text-white hover:text-secondary transition-colors" title="替换抖音链接">
+                    <!-- 抖音图标图片（自动适配大小） -->
+                    <img src="./673a679239d692bfb987abca1b881ab24732(1).png" alt="抖音" class="w-6 h-6 object-contain">
+                </a>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+            <p>© 2025 古庸城. 保留所有权利.</p>
+            <p class="mt-2">张家界文化村 · 武陵初章</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('bg-dark', 'bg-opacity-90', 'shadow-md');
+            navbar.classList.remove('bg-transparent');
+        } else {
+            navbar.classList.remove('bg-dark', 'bg-opacity-90', 'shadow-md');
+            navbar.classList.add('bg-transparent');
+        }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+</body>
+</html>
